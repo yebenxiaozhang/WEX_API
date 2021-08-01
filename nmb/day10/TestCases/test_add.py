@@ -14,11 +14,11 @@ import json
 
 from Common.handle_requests import send_requests
 from Common.handle_excel import HandleExcel
-from Common.myddt import ddt,data
+from Common.myddt import ddt, data
 from Common.handle_path import datas_dir
 from Common.my_logger import logger
 from Common.handle_db import HandleDB
-from Common.handle_data import replace_case_by_regular,EnvData,clear_EnvData_attrs
+from Common.handle_data import replace_case_by_regular, EnvData, clear_EnvData_attrs
 from Common.handle_extract_data_from_response import extract_data_from_response
 
 # 读数据
@@ -29,7 +29,6 @@ he.close_file()
 
 @ddt
 class TestAdd(unittest.TestCase):
-
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -43,21 +42,18 @@ class TestAdd(unittest.TestCase):
         logger.info("************** 加标接口 结束测试 ************")
 
     @data(*cases)
-    def test_add(self,case):
+    def test_add(self, case):
         # 替换case -
         case = replace_case_by_regular(case)
         # 如果前置sql - 得到结果后，再次替换。
         # 发送请求 - 考虑用例是否都需要token
-        if hasattr(EnvData,"admin_token"):
-            response = send_requests(case["method"],case["url"],case["request_data"],token=EnvData.admin_token)
+        if hasattr(EnvData, "admin_token"):
+            response = send_requests(case["method"], case["url"], case["request_data"], token=EnvData.admin_token)
         else:
             response = send_requests(case["method"], case["url"], case["request_data"])
         # 如果有提取表达式，提取数据，设置为全局变量。
         if case["extract_data"]:
-            extract_data_from_response(case["extract_data"],response.json())
+            extract_data_from_response(case["extract_data"], response.json())
         # 如果有期望结果，则断言
 
         # 如果有check_sql,数据库较验。
-
-
-

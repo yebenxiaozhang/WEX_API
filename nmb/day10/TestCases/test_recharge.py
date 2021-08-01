@@ -32,18 +32,18 @@ import json
 
 from Common.handle_requests import send_requests
 from Common.handle_excel import HandleExcel
-from Common.myddt import ddt,data
+from Common.myddt import ddt, data
 from Common.handle_path import datas_dir
 from Common.my_logger import logger
 from Common.handle_db import HandleDB
-from Common.handle_data import replace_case_by_regular,EnvData,clear_EnvData_attrs
+from Common.handle_data import replace_case_by_regular, EnvData, clear_EnvData_attrs
 
-
-he = HandleExcel(datas_dir+"\\api_cases.xlsx","充值")
+he = HandleExcel(datas_dir + "\\api_cases.xlsx", "充值")
 cases = he.read_all_datas()
 he.close_file()
 
 db = HandleDB()
+
 
 @ddt
 class TestRecharge(unittest.TestCase):
@@ -54,21 +54,20 @@ class TestRecharge(unittest.TestCase):
         clear_EnvData_attrs()
 
         # 得到登陆的用户名和密码
-        user,passwd = get_old_phone()
+        user, passwd = get_old_phone()
         # 登陆接口调用。
-        resp = send_requests("POST","member/login",{"mobile_phone":user,"pwd":passwd})
+        resp = send_requests("POST", "member/login", {"mobile_phone": user, "pwd": passwd})
         # cls.member_id = jsonpath(resp.json(),"$..id")[0]
         # cls.token = jsonpath(resp.json(),"$..token")[0]
-        setattr(EnvData,"member_id",str(jsonpath(resp.json(),"$..id")[0]))
-        setattr(EnvData, "token", jsonpath(resp.json(),"$..token")[0])
+        setattr(EnvData, "member_id", str(jsonpath(resp.json(), "$..id")[0]))
+        setattr(EnvData, "token", jsonpath(resp.json(), "$..token")[0])
 
     def tearDown(self) -> None:
-        if hasattr(EnvData,"money"):
-            delattr(EnvData,"money")
-
+        if hasattr(EnvData, "money"):
+            delattr(EnvData, "money")
 
     @data(*cases)
-    def test_recharge(self,case):
+    def test_recharge(self, case):
         # 替换的数据
         if case["request_data"].find("#member_id#") != -1:
             case = replace_case_by_regular(case)
@@ -80,14 +79,14 @@ class TestRecharge(unittest.TestCase):
             # 期望的用户余额。 充值之前的余额 + 充值的钱
             recharge_money = json.loads(case["request_data"])["amount"]
             logger.info("充值的金额为：{}".format(recharge_money))
-            expected_user_leave_amount = round(float(user_money_before_recharge) + recharge_money,2)
+            expected_user_leave_amount = round(float(user_money_before_recharge) + recharge_money, 2)
             logger.info("期望的充值之后的金额为：{}".format(expected_user_leave_amount))
-            setattr(EnvData,"money",str(expected_user_leave_amount))
+            setattr(EnvData, "money", str(expected_user_leave_amount))
             # 更新期望的结果 - 将期望的用户余额更新到期望结果当中。
             case = replace_case_by_regular(case)
 
         # 发起请求 - 给用户充值
-        response = send_requests(case["method"],case["url"],case["request_data"],token=EnvData.token)
+        response = send_requests(case["method"], case["url"], case["request_data"], token=EnvData.token)
 
         # 将期望的结果转成字典对象，再去比对
         expected = json.loads(case["expected"])
@@ -102,7 +101,8 @@ class TestRecharge(unittest.TestCase):
                 # 数据库 - 查询当前用户的余额
                 user_money_after_recharge = db.select_one_data(case["check_sql"])["leave_amount"]
                 logger.info("充值后的用户余额：{}".format(user_money_after_recharge))
-                self.assertEqual("{:.2f}".format(expected["data"]["leave_amount"]),"{:.2f}".format(float(user_money_after_recharge)))
+                self.assertEqual("{:.2f}".format(expected["data"]["leave_amount"]),
+                                 "{:.2f}".format(float(user_money_after_recharge)))
         except:
             logger.exception("断言失败！")
             raise
