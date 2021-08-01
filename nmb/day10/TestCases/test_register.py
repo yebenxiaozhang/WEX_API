@@ -37,7 +37,6 @@ class TestRegister(unittest.TestCase):
     def tearDownClass(cls) -> None:
         logger.info("======  注册模块用例 执行结束  ========")
 
-
     @data(*cases)
     def test_register_ok(self,case):
         # print("本条测试数据：",case)
