@@ -16,12 +16,12 @@ import json
 from Common.my_logger import logger
 
 
-
 class EnvData:
     """
     存储用例要使用到的数据。
     """
     pass
+
 
 def clear_EnvData_attrs():
     # 清理 EnvData里设置的属性
@@ -38,11 +38,12 @@ def replace_case_by_regular(case):
     对excel当中，读取出来的整条测试用例，做全部替换。
     包括url,request_data,expected,check_sql
     """
-    for key,value in case.items():
+    for key, value in case.items():
         if value is not None and isinstance(value, str):  # 确保是个字符串
             case[key] = replace_by_regular(value)
     logger.info("正则表达式替换完成之后的请求数据：\n{}".format(case))
     return case
+
 
 def replace_by_regular(data):
     """
@@ -72,18 +73,19 @@ def replace_by_regular(data):
     return data
 
 
-def replace_mark_with_data(case,mark,real_data):
+def replace_mark_with_data(case, mark, real_data):
     """
     遍历一个http请求用例涉及到的所有数据，如果说每一个数据有需要替换的，都会替换。
     case: excel当中读取出来一条数据。是个字典。
     mark: 数据当中的占位符。#值#
     real_data: 要替换mark的真实数据。
     """
-    for key,value in case.items():
-        if value is not None and isinstance(value,str): # 确保是个字符串
-            if value.find(mark) != -1: # 找到标识符
-                case[key] = value.replace(mark,real_data)
+    for key, value in case.items():
+        if value is not None and isinstance(value, str):  # 确保是个字符串
+            if value.find(mark) != -1:  # 找到标识符
+                case[key] = value.replace(mark, real_data)
     return case
+
 
 if __name__ == '__main__':
     case = {
@@ -93,5 +95,5 @@ if __name__ == '__main__':
     }
     if case["request_data"].find("#phone#") != -1:
         case = replace_mark_with_data(case, "#phone#", "123456789001")
-    for key,value in case.items():
-        print(key,value)
+    for key, value in case.items():
+        print(key, value)
