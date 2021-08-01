@@ -69,7 +69,7 @@ class HandleRequest:
 
 if __name__ == '__main__':
     a = HandleRequest()
-    # r = a.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
+    r = a.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
     # A = HandleRequest(cookie=1)
     # a = A.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
 
