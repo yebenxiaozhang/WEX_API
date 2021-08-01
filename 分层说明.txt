@@ -1,0 +1,19 @@
+公共使用：Common
+    excel
+    requests
+    logger
+    ddt
+
+配置文件：Conf
+
+测试用例：TestCases
+
+测试数据：TestDatas
+
+输出文件：
+    报告
+    日志
+
+main
+
+
