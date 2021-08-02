@@ -21,9 +21,10 @@ config.read("../Conf/wex.ini", encoding="UTF-8")
 def __handle_header(cookie=None):
     """
     处理请求头。加上项目当中必带的请求头。如果有cookie，加上cookie。
-    :param  cookie: 值
+    :param cookie: 值
     :return: 处理之后headers字典
     """
+
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
     }
@@ -36,9 +37,11 @@ def __handle_header(cookie=None):
 
 def __pre_url(url):
     """
-
-    拼接接口的url地址。
+    拼接接口的url地址
+    :param url:
+    :return: 拼接接口的url地址
     """
+
     base_url = config.get("server", "base_url")
     if url.startswith("/"):
         return base_url + url
@@ -111,7 +114,7 @@ def send_requests(url, data=None, method='POST', cookie=None):
 
 
 if __name__ == '__main__':
-    resp = send_requests('http://116.63.143.113:8082/his/patient/getPatientData')
+    resp = send_requests('/his/patient/getPatientData')
     print(resp.text)
     print(resp.status_code)
 
