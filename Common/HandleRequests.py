@@ -21,7 +21,7 @@ config.read("../Conf/wex.ini", encoding="UTF-8")
 def __handle_header(cookie=None):
     """
     处理请求头。加上项目当中必带的请求头。如果有cookie，加上cookie。
-    :param  cookie:cookie值
+    :param  cookie: 值
     :return: 处理之后headers字典
     """
     headers = {
@@ -29,12 +29,14 @@ def __handle_header(cookie=None):
     }
     if cookie is None:
         headers[
-            'Cookie'] = 'wexShop=04519E29DD49FD91D945BF84C9EAB020; sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
+            'Cookie'] = 'wexShop=04519E29DD49FD91D945BF84C9EAB020; ' \
+                        'sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
     return headers
 
 
 def __pre_url(url):
     """
+
     拼接接口的url地址。
     """
     base_url = config.get("server", "base_url")
@@ -46,6 +48,7 @@ def __pre_url(url):
 
 def __pre_data(data):
     """
+
     如果data是字符串，则转换成字典对象。
     """
     if data is not None and isinstance(data, str):
@@ -59,6 +62,7 @@ def __pre_data(data):
 
 def send_requests(url, data=None, method='POST', cookie=None):
     """
+
     :param url: 请求地址
     :param data: 字典形式的数据
     :param method: 请求方式

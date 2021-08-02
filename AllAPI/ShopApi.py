@@ -10,7 +10,7 @@ import requests
 import configparser
 
 from Common.GlobalMap import GlobalMap
-from Common.HandleRequests import HandleRequest
+from Common.HandleRequests import send_requests
 config = configparser.ConfigParser()
 config.read("../Conf/wex.ini", encoding="UTF-8")
 
@@ -19,7 +19,6 @@ class ShopApi:
 
     def __init__(self):
         self.ShopText = GlobalMap()
-        self.Request = HandleRequest()
 
     def GetPatient(self, keyword=None):
         """
@@ -27,10 +26,9 @@ class ShopApi:
         :param keyword:  关键字 姓名/电话/档案号
         :return:
         """
-
-        self.Request.Request(url='/common/quickSearch',
-                             data={
-                                 'd': keyword
+        send_requests(url='/common/quickSearch',
+                      data={
+                          'd': keyword
                              })
 
     def GetTemporaryPatient(self, keyword=None, page=1, rows=15, start=None, end=None):
@@ -43,8 +41,8 @@ class ShopApi:
         :param end:     结束时间
         :return:
         """
-        self.Request.Request(url='/his/patient/getTemporaryData',
-                             data={
+        send_requests(url='/his/patient/getTemporaryData',
+                      data={
                                  'search': keyword,
                                  'page': page,
                                  'rows': rows,
@@ -53,8 +51,8 @@ class ShopApi:
                              })
 
     def AddPatient(self):
-        self.Request.Request(url='/his/patient/patientAdd',
-                             data={
+        send_requests(url='/his/patient/patientAdd',
+                      data={
 
                              })
 
