@@ -1,7 +1,7 @@
 """
 ============================
 Author: 潘师傅
-Time: 2021/8/2 10:22
+Time: 2021/8/2 11:50
 Project: wex_api
 Company: 厦门微尔笑网络科技有限公司
 ============================
@@ -11,7 +11,7 @@ import os
 import time
 import configparser
 
-from BeautifulReport import BeautifulReport
+from Common.HTMLTestRunner import HTMLTestRunner
 from Common.handle_path import cases_dir, reports_dir
 from Common.mail import SendMail
 
@@ -33,12 +33,15 @@ def latest_report(report_dir):
 
 
 if __name__ == '__main__':
-    s = unittest.TestLoader().discover(cases_dir)
-    # 生成报告
-    br = BeautifulReport(s)
+    s = unittest.defaultTestLoader.discover(cases_dir)
     now = time.strftime("%Y-%m-%d %H_%M_%S")
-    report_name = now + '_' + 'result.html'
-    br.report(config.get('EMAIL', 'E_mail_theme'), report_name, reports_dir)
+    report_name = reports_dir + '/' + now + '_' + 'result.html'
+    description = '环境：' + '\n' + '用例执行情况'
+    with open(report_name, "wb") as f:
+        runner = HTMLTestRunner(stream=f, title=config.get('EMAIL', 'E_mail_theme'), description=description)
+        runner.run(s)
+        f.close()
+
     # 发送邮件
     FS = SendMail(user=config.get('EMAIL', 'E_mail_user'),
                   password=config.get('EMAIL', 'E_mail_password'))

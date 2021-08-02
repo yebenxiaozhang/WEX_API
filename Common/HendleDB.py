@@ -1,23 +1,15 @@
 """
-======================
-Author: 柠檬班-小简
-Time: 2020/7/3 20:41
-Project: day5
-Company: 湖南零檬信息技术有限公司
-======================
-"""
-"""
-1、数据库连接 conn  cur
-2、获取一条数据？
-3、获取条数
-4、获取所有的数据
-5、关闭数据库连接
+============================
+Author: 潘师傅
+Time: 2021/8/2 15:26
+Project: wex_api
+Company: 厦门微尔笑网络科技有限公司
+============================
 """
 
 import pymysql
 
 from Common.handle_config import conf
-
 
 class HandleDB:
 

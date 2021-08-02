@@ -9,8 +9,12 @@ Company: 厦门微尔笑网络科技有限公司
 import urllib3
 import requests
 import json
+import configparser
 from Common.my_logger import logger
 urllib3.disable_warnings()
+
+config = configparser.ConfigParser()
+config.read("../Conf/wex.ini", encoding="UTF-8")
 
 
 class HandleRequest:
@@ -24,9 +28,19 @@ class HandleRequest:
                                      'sysType=1; ' \
                                      '_wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
 
+    # def assignment(self, kwargs):
+    #     for key, value in kwargs.items():
+    #         if type(value) is dict:
+    #             self.assignment(value)
+    #         if value:
+    #             pass
+    #         else:
+    #             kwargs[key] = None
+    #
+    #     return kwargs
+
     def Request(self, url, data=None, method='POST'):
         """
-
         :param url: 请求地址
         :param data: 字典形式的数据
         :param method: 请求方式
@@ -52,7 +66,7 @@ class HandleRequest:
             """变成双引号"""
             # data = json.dumps(data)
             try:
-                resp = requests.post(url=url, data=data, headers=self.headers)
+                resp = requests.post(config.get('Test', 'Server_IP') + url, data=data, headers=self.headers)
                 # response = json.loads(r.text)
                 response = json.dumps(json.loads(resp.text), indent=4, sort_keys=False, ensure_ascii=False)
                 # print("post请求结果为：\n %s" % response)
@@ -72,11 +86,3 @@ if __name__ == '__main__':
     r = a.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
     # A = HandleRequest(cookie=1)
     # a = A.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
-
-
-
-
-
-
-
-
