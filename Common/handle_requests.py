@@ -15,18 +15,18 @@ from Common.handle_config import conf
 
 
 #
-def send_requests(method, url, data=None, token=None):
+def send_requests(method, url, data=None, cookie=None):
     """
 
     :param method:
     :param url:
     :param data:字典形式的数据。
-    :param token:
+    :param cookie:
     :return:
     """
     logger.info("发起一次HTTP请求")
     # 得到请求头
-    headers = __handle_header(token)
+    headers = __handle_header(cookie)
     # 得到完整的url - 拼接url
     url = __pre_url(url)
     # 请求数据的处理 - 如果是字符串，则转换成字典对象。
@@ -47,16 +47,18 @@ def send_requests(method, url, data=None, token=None):
     return resp
 
 
-def __handle_header(token=None):
+def __handle_header(cookie=None):
     """
     处理请求头。加上项目当中必带的请求头。如果有token，加上token。
-    :param token: token值
+    :param cookie: token值
     :return: 处理之后headers字典
     """
-    headers = {"X-Lemonban-Media-Type": "lemonban.v2",
-               "Content-Type": "application/json"}
-    if token:
-        headers["Authorization"] = "Bearer {}".format(token)
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    if cookie is None:
+        headers[
+            'Cookie'] = 'wexShop=04519E29DD49FD91D945BF84C9EAB020; sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
     return headers
 
 
@@ -85,12 +87,8 @@ def __pre_data(data):
 
 
 if __name__ == '__main__':
-    login_url = "http://api.lemonban.com/futureloan/member/login"
+    login_url = "http://116.63.143.113:8082/his/patient/getPatientData"
     login_datas = {"mobile_phone": "13845467789", "pwd": "1234567890"}
     resp = send_requests("POST", login_url, login_datas)
-    token = resp.json()["data"]["token_info"]["token"]
-
-    recharge_url = "http://api.lemonban.com/futureloan/member/recharge"
-    recharge_data = {"member_id": 200119, "amount": 2000}
-    resp = send_requests("POST", recharge_url, recharge_data, token)
-    print(resp.json())
+    print(resp.text)
+    print(resp.status_code)

@@ -3872,3 +3872,10 @@ AssertionError: 0 != 1
 2020-07-20 21:07:15,778 py30 INFO handle_extract_data_from_response.py-29 line：设置环境变量.key:member_id,value:101
 2020-07-20 21:07:15,780 py30 INFO handle_extract_data_from_response.py-29 line：设置环境变量.key:token,value:eyJhbGciOiJIUzUxMiJ9.eyJtZW1iZXJfaWQiOjEwMSwiZXhwIjoxNTk1MjUwNzI4fQ.nisFUi2k17GyWmo5T6yjsNqMkduKU3Hmd3vsuD1K3MCkIGs4xwJ6iEJWPQQSObFJbhbSewxMi-W_WbF3mWKZRw
 2020-07-20 21:07:15,781 py30 INFO test_add.py-43 line：************** 加标接口 结束测试 ************
+2021-08-02 21:35:40,425 py30 INFO handle_requests.py-34 line：发起一次HTTP请求
+2021-08-02 21:35:40,439 py30 INFO handle_requests.py-42 line：请求头为：{'X-Lemonban-Media-Type': 'lemonban.v2', 'Content-Type': 'application/json'}
+2021-08-02 21:35:40,439 py30 INFO handle_requests.py-43 line：请求方法为：POST
+2021-08-02 21:35:40,440 py30 INFO handle_requests.py-44 line：请求url为：http://api.lemonban.com/futureloan/http://api.lemonban.com/futureloan/member/login
+2021-08-02 21:35:40,440 py30 INFO handle_requests.py-45 line：请求数据为：{'mobile_phone': '13845467789', 'pwd': '1234567890'}
+2021-08-02 21:35:40,566 py30 INFO handle_requests.py-52 line：响应状态码为：200
+2021-08-02 21:35:40,567 py30 INFO handle_requests.py-53 line：响应数据为：{'code': 1004, 'msg': 'No handler found for POST /futureloan/http://api.lemonban.com/futureloan/member/login', 'data': None, 'copyright': 'Copyright 柠檬班 © 2017-2020 湖南省零檬信息技术有限公司 All Rights Reserved'}
