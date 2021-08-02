@@ -118,5 +118,3 @@ if __name__ == '__main__':
     print(resp.text)
     print(resp.status_code)
 
-    # A = HandleRequest(cookie=1)
-    # a = A.Request(url='http://116.63.143.113:8082/his/patient/getPatientData')
