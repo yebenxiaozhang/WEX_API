@@ -34,7 +34,6 @@ def __handle_header(cookie=None):
                         'sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
     return headers
 
-
 def __pre_url(url):
     """
     拼接接口的url地址
@@ -88,18 +87,19 @@ def send_requests(url, data=None, method='POST', cookie=None):
             resp = requests.get(url=url, params=data, headers=headers)
             # resp = requests.get(url=_url, params=data, headers=self.headers)
             # response = json.loads(r.text)
-            response = json.dumps(json.loads(resp.text), indent=4, sort_keys=False,
-                                  ensure_ascii=False)
+            # response = json.dumps(json.loads(resp.text), indent=4, sort_keys=False,
+            #                       ensure_ascii=False)
             # print("get请求结果为：\n %s" % response)
         except BaseException as e:
             print("get请求错误，错误原因：%s" % e)
+
     elif method == "POST":
         """变成双引号"""
         # data = json.dumps(data)
         try:
             resp = requests.post(url, data=data, headers=headers)
             # response = json.loads(r.text)
-            response = json.dumps(json.loads(resp.text), indent=4, sort_keys=False, ensure_ascii=False)
+            # response = json.dumps(json.loads(resp.text), indent=4, sort_keys=False, ensure_ascii=False)
             # print("post请求结果为：\n %s" % response)
         except BaseException as e:
             print("post请求错误，错误原因：%s" % e)
@@ -115,6 +115,6 @@ def send_requests(url, data=None, method='POST', cookie=None):
 
 if __name__ == '__main__':
     resp = send_requests('/his/patient/getPatientData')
-    print(resp.text)
-    print(resp.status_code)
+    # print(resp.text)
+    # print(resp.status_code)
 

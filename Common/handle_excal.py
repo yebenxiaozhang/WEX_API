@@ -5,17 +5,16 @@ Time: 2021/8/1 13:44
 Project: wex_api
 Company: 厦门微尔笑网络科技有限公司
 ============================
-"""
-"""
+
 excel类，你的需求是实现是什么?
 1、读取表头
 2、读取数据 - 读取表头以外的所有数据。 - 返回值：列表，成员是每一行数据
 
 初始化工作？  加载一个excel,打开一个表单。
-
 """
-from openpyxl import load_workbook
+
 import json
+from openpyxl import load_workbook
 
 
 class HandleExcel:
