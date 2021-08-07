@@ -274,7 +274,26 @@ class ShopApi():
                                             'dictType': dictType
                                         })
 
+    def SendSmsCode(self, user):
+        """
+        获取验证码
+        :param user: 账号
+        :return:
+        """
+        self.SendRequests.send_requests(url='/shop/login/sendSmsCode',
+                                        data={
+                                            'uName': user
+                                        })
+
 
 if __name__ == '__main__':
     a = ShopApi()
-    a.GetBookingData()
+    # a.GetBookingData()
+    # a.SendSmsCode(user=13062200304)
+    import time
+    while 1 != 0:
+        # a = ShopApi()
+        time.sleep(200)
+        a.SendSmsCode(user=13062200304)
+
+
