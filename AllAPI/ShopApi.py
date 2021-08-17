@@ -285,6 +285,19 @@ class ShopApi():
                                             'uName': user
                                         })
 
+    def GetSQL(self):
+        """
+
+        :return: 获取SQL
+        """
+        self.SendRequests.send_requests(url='/druid/sql.json?orderBy=MaxTimespan',
+                                        data={
+                                            'orderBy': 'MaxTimespan',
+                                            'orderType': 'asc',
+                                            'page': 1,
+                                            'perPageCount': 5
+                                        })
+
 
 if __name__ == '__main__':
     a = ShopApi()
@@ -293,7 +306,7 @@ if __name__ == '__main__':
     import time
     while 1 != 0:
         # a = ShopApi()
-        time.sleep(200)
+        # time.sleep(50)
         a.SendSmsCode(user=13062200304)
 
 

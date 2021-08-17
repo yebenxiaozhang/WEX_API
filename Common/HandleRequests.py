@@ -11,7 +11,7 @@ import requests
 import json
 import configparser
 from Common.my_logger import logger
-
+from Common.GlobalMap import GlobalMap
 urllib3.disable_warnings()
 
 config = configparser.ConfigParser()
@@ -20,7 +20,7 @@ config.read("../Conf/wex.ini", encoding="UTF-8")
 
 class HandleRequest:
     def __init__(self):
-        pass
+        self.ShopText = GlobalMap()
 
     def __handle_header(self, cookie=None):
         """
@@ -34,8 +34,11 @@ class HandleRequest:
         }
         if cookie is None:
             headers[
-                'Cookie'] = 'wexShop=04519E29DD49FD91D945BF84C9EAB020; ' \
-                            'sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
+                'Cookie'] = '_wex_captcha=8d8650c0baf14f3d8ac2ba1725a2e2b9; ' \
+                            'wexShop=36D614C6DDF7FC9B96A5154C45C654DA; sysType=0'
+            # headers[
+            #     'Cookie'] = 'wexShop=04519E29DD49FD91D945BF84C9EAB020; ' \
+            #                 'sysType=1; _wex_captcha=f71aebd1f4d943dd954d741d1cc905e7'
         return headers
 
     def __pre_url(self, url):
@@ -115,6 +118,7 @@ class HandleRequest:
         logger.info("相应状态码为：{}".format(resp.status_code))
         if resp.json():
             logger.info("响应数据为：{}".format(resp.json()))
+        self.ShopText.set_map('TEXT', resp.text)
         return resp
 
 
