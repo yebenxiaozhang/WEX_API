@@ -52,7 +52,8 @@ class Test(unittest.TestCase):
         """
 
         import csv
-
+        import warnings
+        warnings.simplefilter('ignore', ResourceWarning)
         #  1.创建文件对象
         f = open('csv_file.csv', 'w', encoding='utf-8')
 
@@ -62,7 +63,7 @@ class Test(unittest.TestCase):
         #  3.构建列表头
         csv_write.writerow(['序号', '执行时间', 'SQL'])
         dome = 1
-        while dome != 1000:
+        while dome != 10000000:
             time.sleep(5)
             self.A.GetSQL()
             import json
@@ -75,3 +76,11 @@ class Test(unittest.TestCase):
                 demo1 = demo1 + 1
 
         f.close()
+
+    def test_03(self):
+        """
+
+        :return:
+        """
+        self.A.GetCookie(uName=13062200300, password='Pan19951105', shopName='微尔笑测试专用')
+

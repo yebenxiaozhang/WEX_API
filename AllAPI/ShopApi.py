@@ -16,7 +16,7 @@ config = configparser.ConfigParser()
 config.read("../Conf/wex.ini", encoding="UTF-8")
 
 
-class ShopApi():
+class ShopApi:
 
     def __init__(self):
         self.ShopText = GlobalMap()
@@ -290,13 +290,31 @@ class ShopApi():
 
         :return: 获取SQL
         """
-        self.SendRequests.send_requests(url='/druid/sql.json?orderBy=MaxTimespan',
+        self.SendRequests.send_requests(url='/druid/sql.json?orderBy=TotalTime&orderType=asc&page=1&perPageCount=10000',
                                         data={
                                             'orderBy': 'MaxTimespan',
                                             'orderType': 'asc',
                                             'page': 1,
                                             'perPageCount': 5
                                         })
+
+    def GetCookie(self, uName, password, shopName):
+        """
+        一键获取COOKIE
+        :param uName: 账号
+        :param password: 密码
+        :param shopName: 门店名称（非ID）
+        :return:
+        """
+        self.PostRequest(url='/demo/getLoginTicket',
+                                        data={
+                                            'uName': uName,
+                                            'password': password,
+                                            'shopName': shopName
+                                        })
+
+    def PostRequest(self, url, data=None, method='POST', cookie=None):
+        self.SendRequests.send_requests(self, url, data=data, method=method, cookie=cookie)
 
 
 if __name__ == '__main__':
