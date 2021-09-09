@@ -63,7 +63,7 @@ class ShopApi:
                    heartRate=None, bloodPressure=None, breathing=None, ALLERGY_HISTORY=None, PREVIOUS_HISTORY=None,
                    LIFE_HISTORY=None, TREATMENT_HISTORY=None, clearTeeth=None, drinkingHistory=None, rescue=None,
                    lastTreatHospital=None, smokePerDay=None, brushTimesPerDay=None, brushMinPerTime=None,
-                   PATIENT_TAG1=None, black=None
+                   PATIENT_TAG1=None, black=None, fromTemp=None, sexcheckbox=None, blackcheckbox=None
                    ):
         """
         新增患者
@@ -130,6 +130,9 @@ class ShopApi:
         :param brushMinPerTime:     每次刷牙分钟数
         :param PATIENT_TAG1:        填写ID
         :param black:           0？
+        :param fromTemp:           0？
+        :param sexcheckbox:           0？
+        :param blackcheckbox:           0？
         :return:
         """
         self.SendRequests.send_requests(url='/his/patient/patientAdd',
@@ -196,7 +199,10 @@ class ShopApi:
                                             'brushTimesPerDay': brushTimesPerDay,
                                             'brushMinPerTime': brushMinPerTime,
                                             'PATIENT_TAG1': PATIENT_TAG1,
-                                            'black': black
+                                            'black': black,
+                                            'fromTemp': fromTemp,
+                                            'sexcheckbox': sexcheckbox,
+                                            'blackcheckbox': blackcheckbox,
 
 
                                         })
@@ -306,15 +312,15 @@ class ShopApi:
         :param shopName: 门店名称（非ID）
         :return:
         """
-        self.PostRequest(url='/demo/getLoginTicket',
+        self.SendRequests.send_requests(url='/demo/getLoginTicket',
                                         data={
                                             'uName': uName,
                                             'password': password,
                                             'shopName': shopName
                                         })
 
-    def PostRequest(self, url, data=None, method='POST', cookie=None):
-        self.SendRequests.send_requests(self, url, data=data, method=method, cookie=cookie)
+    # def PostRequest(self, url, data=None, method='POST', cookie=None):
+    #     self.SendRequests.send_requests(self, url, data=data, method=method, cookie=cookie)
 
 
 if __name__ == '__main__':

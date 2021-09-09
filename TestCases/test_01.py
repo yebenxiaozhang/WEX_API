@@ -63,7 +63,7 @@ class Test(unittest.TestCase):
         #  3.构建列表头
         csv_write.writerow(['序号', '执行时间', 'SQL'])
         dome = 1
-        while dome != 10000000:
+        while dome != -1:
             time.sleep(5)
             self.A.GetSQL()
             import json
@@ -72,8 +72,8 @@ class Test(unittest.TestCase):
             while globals()['text']['Content'][demo1]['TotalTime'] > 4000:
                 csv_write.writerow([dome, globals()['text']['Content'][demo1]['TotalTime'],
                                     globals()['text']['Content'][demo1]['SQL']])
-                dome = dome + 1
                 demo1 = demo1 + 1
+            dome = dome + 1
 
         f.close()
 
@@ -82,5 +82,46 @@ class Test(unittest.TestCase):
 
         :return:
         """
-        self.A.GetCookie(uName=13062200300, password='Pan19951105', shopName='微尔笑测试专用')
+        from Common.GetNewPatient import new_patient
+        dome = 0
+        while dome != 66:
+            import time
+            time.sleep(0.5)
+            x, y = new_patient()
+            print(x, y)
+            # self.A.GetCookie(uName=13062200300, password='Pan19951105', shopName='胡里店')
+            self.A.AddPatient(patientName=x, phone1=y, phone1Belong='b807385b4a6e4899a5b6a5013d7dbd8d', introducerType=30,
+                              mutual=0, black=0, fromTemp=0, sexcheckbox=0, blackcheckbox=0)
+            dome = dome + 1
 
+    # def test_04(self):
+    #     """
+    #
+    #     :return:
+    #     """
+    #
+    #     import csv
+    #     import warnings
+    #     warnings.simplefilter('ignore', ResourceWarning)
+    #     #  1.创建文件对象
+    #     f = open('csv_file.csv', 'w', encoding='utf-8')
+    #
+    #     #  2.基于文件对象构建csv写入对象
+    #     csv_write = csv.writer(f)
+    #     import time
+    #     #  3.构建列表头
+    #     csv_write.writerow(['patientId', 'patientName'])
+    #     dome = 100
+    #     while dome != 1:
+    #         # time.sleep(5)
+    #         demo1 = 0
+    #         self.A.GetPatientData(page=dome)
+    #         import json
+    #         globals()['text'] = json.loads(self.ShopText.get('TEXT'))
+    #         while demo1 != 15:
+    #             csv_write.writerow([globals()['text']['rows'][demo1]['patientId'],
+    #                                 globals()['text']['rows'][demo1]['patientName']])
+    #             demo1 = demo1 + 1
+    #         dome = dome + 1
+    #
+    #     f.close()

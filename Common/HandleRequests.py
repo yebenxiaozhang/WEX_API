@@ -28,17 +28,20 @@ class HandleRequest:
         :param cookie: 值
         :return: 处理之后headers字典
         """
-
-        self.ShopText.set_map('cookie', 'wexShop=476935F32313B7EE347AC1EE2657568E; '
-                                        '_wex_captcha=fb7b0b3b0cd840639dc3549368288f34; sysType=0')
+        self.ShopText.set_map('cookie', '')
 
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
         }
         if cookie is None:
-            headers[
-                # 'ticket'] = self.ShopText.get('cookie')
-                'cookie'] = self.ShopText.get('cookie')
+            if self.ShopText.get('cookie') == '':
+                headers[
+                    # 'ticket'] = self.ShopText.get('cookie')
+                    'cookie'] = config.get("server", "cookie")
+            else:
+                headers[
+                    # 'ticket'] = self.ShopText.get('cookie')
+                    'cookie'] = self.ShopText.get('cookie')
         return headers
 
     def __pre_url(self, url):
