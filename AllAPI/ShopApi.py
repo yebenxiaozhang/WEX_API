@@ -6,8 +6,12 @@ Project: wex_api
 Company: 厦门微尔笑网络科技有限公司
 ============================
 """
+import json
+
 import requests
 import configparser
+import jsonpath
+import random
 
 from Common.GlobalMap import GlobalMap
 from Common.HandleRequests import HandleRequest
@@ -261,7 +265,7 @@ class ShopApi:
                                             'search': keyword
                                         })
 
-    def GetSelect(self, dictType):
+    def GetSelect(self, dictType, random=1):
         """
         获取各种小标签
         :param dictType:
@@ -279,6 +283,13 @@ class ShopApi:
                                         data={
                                             'dictType': dictType
                                         })
+        if random == 0 and dictType == 'PHONE_BELONG':
+            self.ShopText.set_map(dictType, random.choice(jsonpath.jsonpath(json.loads(self.ShopText.get('TEXT')),
+                                                                            "$..iCreateTime")))
+        else:
+            self.ShopText.set_map(dictType, random.choice(jsonpath.jsonpath(json.loads(self.ShopText.get('TEXT')),
+                                                                            "$..iCreateTime")))
+        print(self.ShopText.get())
 
     def SendSmsCode(self, user):
         """
@@ -293,7 +304,6 @@ class ShopApi:
 
     def GetSQL(self):
         """
-
         :return: 获取SQL
         """
         self.SendRequests.send_requests(url='/druid/sql.json?orderBy=TotalTime&orderType=asc&page=1&perPageCount=10000',
