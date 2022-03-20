@@ -306,7 +306,7 @@ class ShopApi:
         """
         :return: 获取SQL
         """
-        self.SendRequests.send_requests(url='/druid/sql.json?orderBy=TotalTime&orderType=asc&page=1&perPageCount=10000',
+        self.SendRequests.send_requests(url='/druid/sql.json?orderBy=TotalTime&orderType=asc&page=1&perPageCount=100',
                                         data={
                                             'orderBy': 'MaxTimespan',
                                             'orderType': 'asc',

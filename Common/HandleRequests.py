@@ -119,8 +119,8 @@ class HandleRequest:
             print(f"暂不支持{method}方法")
         # self.TEXT.set_map('text', response)
         logger.info("相应状态码为：{}".format(resp.status_code))
-        if resp.json():
-            logger.info("响应数据为：{}".format(resp.json()))
+        # if resp.json():
+        #     logger.info("响应数据为：{}".format(resp.json()))
         self.ShopText.set_map('TEXT', resp.text)
         return resp
 
