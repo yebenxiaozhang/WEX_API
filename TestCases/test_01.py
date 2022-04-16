@@ -72,7 +72,7 @@ class Test(unittest.TestCase):
         # 去重CSV 重复项
         import shutil
         import pandas as pd
-        frame = pd.read_csv('D:/wex_api/TestCases/221csv_file.csv', engine='python')
+        frame = pd.read_csv('D:/wex_api/TestCases/csv_file.csv', engine='python')
 
         data = frame.drop_duplicates(subset=['SQL'], keep='first', inplace=False)
         # 如subset=['A','B']去A列和B列重复的数据
@@ -82,7 +82,7 @@ class Test(unittest.TestCase):
         # 删除重复项并保留第一次出现的项
         # inplace: boolean, default False
         # 是直接在原来数据上修改还是保留一个副本
-        data.to_csv('D:/wex_api/TestCases/2022031903雅正口腔慢查询SQL - 去重.csv', encoding='utf8')
+        data.to_csv('D:/wex_api/TestCases/2022041501雅正口腔慢查询SQL.csv', encoding='utf8')
     #
     # def test_03(self):
     #     """

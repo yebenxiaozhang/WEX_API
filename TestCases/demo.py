@@ -19,7 +19,7 @@ import csv
 import warnings
 warnings.simplefilter('ignore', ResourceWarning)
 #  1.创建文件对象
-f = open('221csv_file.csv', 'w+', encoding='utf-8')
+f = open('csv_file.csv', 'w+', encoding='utf-8')
 
 #  2.基于文件对象构建csv写入对象
 csv_write = csv.writer(f)
@@ -39,7 +39,7 @@ while dome != -1:
         demo1 = demo1 + 1
         print(demo1)
         if demo1 == 100:
-            globals()['text']['Content'][demo1]['TotalTime'] = 3000
+            globals()['text']['Content'][demo1]['TotalTime'] = 100
     dome = dome + 1
 
 f.close()
