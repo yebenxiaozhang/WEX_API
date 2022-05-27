@@ -15,6 +15,7 @@ import random
 
 from Common.GlobalMap import GlobalMap
 from Common.HandleRequests import HandleRequest
+from Common.mail import SendMail
 
 config = configparser.ConfigParser()
 config.read("../Conf/wex.ini", encoding="UTF-8")
@@ -25,6 +26,10 @@ class ShopApi:
     def __init__(self):
         self.ShopText = GlobalMap()
         self.SendRequests = HandleRequest()
+        self._SendMail = SendMail(user=config.get('EMAIL', 'E_mail_user'),
+                                  password=config.get('EMAIL', 'E_mail_password'),
+                                  host=config.get('EMAIL', 'E_mail_host'),
+                                  port=config.get('EMAIL', 'E_mail_port'))
 
     def GetPatient(self, keyword=None):
         """
@@ -56,8 +61,8 @@ class ShopApi:
                                             'end': end
                                         })
 
-    def AddPatient(self, patientName, phone1, patientNameRemark=None, sex=None, phone1Belong=None, birthday=None,
-                   age=None,phone2=None,phone2Belong=None,livingArea=None,workingCircle=None,remark=None, mutual=None,
+    def add_patient(self, patientName, phone1, patientNameRemark=None, sex=None, phone1Belong=None, birthday=None,
+                   age=None, phone2=None, phone2Belong=None,livingArea=None,workingCircle=None,remark=None, mutual=None,
                    origin=None, channel=None,source=None,profession=None,introducerType=None, introducerId=None,
                    introducer=None, relationship=None, educational=None, guarder=None, nationality=None, nation=None,
                    religion=None, addressArea=None, address=None,qq=None, bloodType=None, marry=None, email=None,
@@ -80,7 +85,7 @@ class ShopApi:
         :param age:             年龄
         :param phone2:          患者电话2
         :param phone2Belong:    患者电话归属2 填写ID
-        :param livingArea:      填写ID
+        :param livingArea:      填写ID--`1
         :param workingCircle:   填写ID
         :param remark:          备注信息
         :param mutual:          0
@@ -332,15 +337,27 @@ class ShopApi:
     # def PostRequest(self, url, data=None, method='POST', cookie=None):
     #     self.SendRequests.send_requests(self, url, data=data, method=method, cookie=cookie)
 
+    def SendMail(self):
+        """发送邮件"""
+        self._SendMail.send_mail(theme=config.get('EMAIL', 'E_mail_theme'),
+                                 content='客户地址' + config.get("server", "base_url"),
+                                 to=(config.get('EMAIL', 'E_mail_to')).strip(',').split(','))
+
+    def do_register(self, treatDoctorId, treatDeptId):
+        """挂号"""
+        self.SendRequests.send_requests(url='/his/frontWorkstation/doRegister',
+                                        data={
+                                            'treatDoctorId': treatDoctorId,
+                                            'treatDeptId': treatDeptId,
+                                            'regFee': 0
+                                        })
+
 
 if __name__ == '__main__':
     a = ShopApi()
     # a.GetBookingData()
+    a.SendMail()
     # a.SendSmsCode(user=13062200304)
     import time
-    while 1 != 0:
-        # a = ShopApi()
-        # time.sleep(50)
-        a.SendSmsCode(user=13062200304)
 
 

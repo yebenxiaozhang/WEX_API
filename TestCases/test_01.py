@@ -55,15 +55,21 @@ class Test(unittest.TestCase):
         #  3.构建列表头
         csv_write.writerow(['序号', '执行时间', 'SQL'])
         dome = 1
+        banana = 1
         while dome != -1:
             self.A.GetSQL()
             time.sleep(5)
             globals()['text'] = json.loads(self.ShopText.get('TEXT'))
             demo1 = 0
-            while globals()['text']['Content'][demo1]['TotalTime'] > 4000:
+            while globals()['text']['Content'][demo1]['TotalTime'] > 3000:
                 csv_write.writerow([dome, globals()['text']['Content'][demo1]['TotalTime'],
                                     globals()['text']['Content'][demo1]['SQL']])
                 demo1 = demo1 + 1
+                if demo1 == 40 and banana == 1:
+                    banana = banana + 1
+                    self.A.SendMail()
+                if demo1 == 100:
+                    globals()['text']['Content'][demo1]['TotalTime'] = 100
             dome = dome + 1
 
         f.close()
@@ -82,7 +88,7 @@ class Test(unittest.TestCase):
         # 删除重复项并保留第一次出现的项
         # inplace: boolean, default False
         # 是直接在原来数据上修改还是保留一个副本
-        data.to_csv('D:/wex_api/TestCases/2022041501雅正口腔慢查询SQL.csv', encoding='utf8')
+        data.to_csv('D:/wex_api/TestCases/2022042802庞氏口腔慢查询SQL.csv', encoding='utf8')
     #
     # def test_03(self):
     #     """

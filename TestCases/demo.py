@@ -27,6 +27,7 @@ import time
 #  3.构建列表头
 csv_write.writerow(['序号', '执行时间', 'SQL'])
 dome = 1
+B = 1
 while dome != -1:
     time.sleep(5)
     A.GetSQL()
@@ -37,9 +38,13 @@ while dome != -1:
         csv_write.writerow([dome, globals()['text']['Content'][demo1]['TotalTime'],
                             globals()['text']['Content'][demo1]['SQL']])
         demo1 = demo1 + 1
-        print(demo1)
+        if demo1 >= 10:
+            print(demo1)
+        if demo1 == 70 and B == 1:
+            # A.SendMail()
+            B = B + 1
         if demo1 == 100:
             globals()['text']['Content'][demo1]['TotalTime'] = 100
-    dome = dome + 1
+        dome = dome + 1
 
 f.close()

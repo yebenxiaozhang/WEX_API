@@ -13,7 +13,7 @@ import yagmail
 
 class SendMail(object):
 
-    def __init__(self, user, password, host='smtp.qq.com', port=465):
+    def __init__(self, user, password, host, port):
         """
         连接服务器
         :param user:    *邮箱账号
@@ -38,6 +38,7 @@ class SendMail(object):
         # 发送邮件
         self.mail.send(
             to=to,  # 如果多个收件人的话，写成list就行了，如果只是一个账号，就直接写字符串就行to='736297001@qq.com'
+            # ['34414822@qq.com', 'chenxiaomumu@163.com', '736297001@qq.com', '23071059@qq.com'] -- 多个
             subject=theme,  # 主题
             contents=content,  # 内容
             attachments=attachments,  # 附件
@@ -46,5 +47,5 @@ class SendMail(object):
 
 
 if __name__ == '__main__':
-    FS = SendMail(user='153390680@qq.com', password='biiymxtafrocbjbi')
-    FS.send_mail(theme='这个是邮箱注', to='736297001@qq.com')
+    FS = SendMail(user='153390680@qq.com', password='obsordardxilcabj', host='smtp.qq.com', port=465)
+    FS.send_mail(theme='这个是邮箱主题', content='马鑫是靓仔', to='maxin@kqrj.cn')
